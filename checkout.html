@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout - WDZ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>WDZ Order Form</h2>
+
+<form id="orderForm">
+
+<input type="text" id="name" placeholder="Name" required>
+<input type="text" id="phone" placeholder="Phone" required>
+<input type="text" id="city" placeholder="City" required>
+<input type="text" id="address" placeholder="Address" required>
+
+<select id="product" required>
+  <option value="WDZ T-Shirt">WDZ T-Shirt</option>
+  <option value="WDZ Hoodie">WDZ Hoodie</option>
+</select>
+
+<select id="size" required>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+  <option value="XL">XL</option>
+</select>
+
+<select id="color" required>
+  <option value="Black">Black</option>
+  <option value="Green">Green</option>
+</select>
+
+<input type="number" id="quantity" placeholder="Quantity" min="1" value="1" required>
+
+<input type="text" id="total" placeholder="Total" readonly>
+
+<button type="submit">Confirm Order</button>
+
+</form>
+
+<script src="script.js"></script>
+
+</body>
+</html>

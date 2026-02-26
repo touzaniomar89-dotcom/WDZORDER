@@ -1,48 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkout - WDZ</title>
-<link rel="stylesheet" href="style.css">
+<title>إتمام الطلب</title>
 </head>
 <body>
 
-<h2>WDZ Order Form</h2>
+<h2>تفاصيل الطلب</h2>
 
-<form id="orderForm">
+<div id="order-info"></div>
 
-<input type="text" id="name" placeholder="Name" required>
-<input type="text" id="phone" placeholder="Phone" required>
-<input type="text" id="city" placeholder="City" required>
-<input type="text" id="address" placeholder="Address" required>
+<h3>معلومات الزبون</h3>
 
-<select id="product" required>
-  <option value="WDZ T-Shirt">WDZ T-Shirt</option>
-  <option value="WDZ Hoodie">WDZ Hoodie</option>
-</select>
-
-<select id="size" required>
-  <option value="S">S</option>
-  <option value="M">M</option>
-  <option value="L">L</option>
-  <option value="XL">XL</option>
-</select>
-
-<select id="color" required>
-  <option value="Black">Black</option>
-  <option value="Green">Green</option>
-</select>
-
-<input type="number" id="quantity" placeholder="Quantity" min="1" value="1" required>
-
-<input type="text" id="total" placeholder="Total" readonly>
-
-<button type="submit">Confirm Order</button>
-
+<form id="order-form">
+  <input type="text" id="name" placeholder="الاسم الكامل" required><br><br>
+  <input type="text" id="phone" placeholder="رقم الهاتف" required><br><br>
+  <input type="text" id="city" placeholder="المدينة" required><br><br>
+  <button type="submit">تأكيد الطلب</button>
 </form>
 
-<script src="script.js"></script>
+<script>
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+if(cart.length === 0){
+  document.body.innerHTML = "<h2>لا يوجد منتج مختار</h2>";
+}else{
+  document.getElementById("order-info").innerHTML =
+    "<p>المنتج: " + cart[0].name + "</p>" +
+    "<p>السعر: " + cart[0].price + " درهم</p>";
+}
+
+document.getElementById("order-form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const data = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    city: document.getElementById("city").value,
+    product: cart[0].name,
+    price: cart[0].price
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbyjwMU5fAB-_EsshT0JpPqP3RdWzA3mp0KsrN0GUgkh33ujesSP1DFfylfwKSfqa1qIxQ/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.text())
+  .then(() => {
+    localStorage.removeItem("cart");
+    window.location.href = "thankyou.html";
+  })
+  .catch(() => {
+    alert("حدث خطأ");
+  });
+
+});
+</script>
 
 </body>
 </html>
